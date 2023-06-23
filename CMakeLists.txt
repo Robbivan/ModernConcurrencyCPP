@@ -3,4 +3,4 @@ project(Concu)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Concu start.cpp)
+add_executable(Concu start.cpp Mutex/mutex_test.cpp)
