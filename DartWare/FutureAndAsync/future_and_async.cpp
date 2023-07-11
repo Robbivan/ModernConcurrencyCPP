@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void generate_value(const int32_t delay){
+int32_t generate_value(const int32_t delay){
 
     for (int i = 0; i < 100; ++i) {
         cout<<".";
@@ -24,11 +24,11 @@ int main(){
     int32_t value;
 
 
-    generate_value();
+
 
     // 2 режима async и deffered
     // по умолчанию само выбирает (обычно async)
-    future<void> simple_future = async(launch::async,generate_value, 10);
+    future<int32_t> simple_future = async(launch::async,generate_value, 10);
     // async вызывается мгновенно при создании simple_future
     // deffered откладывает запуск до get
 
@@ -44,10 +44,13 @@ int main(){
 
     // надо синхронизировать с главным потоком, который быстрее
     // надо чтобы он ждал
-    simple_future.wait();
+//    simple_future.wait();
 //    simple_future.wait_for(chrono::milliseconds(10));
 //    simple_future.wait_until(chrono::high_resolution::now()+chrono::milliseconds(10));
 
+
+    // вместо wait, чтобы получить значение из асинхронно запушенной функции
+    value = simple_future.get();
 
 
     cout<<"Value: "<<value<<endl;
